@@ -16,6 +16,22 @@ class SnakeProvider with ChangeNotifier {
   Apple? _apple;
   int _score;
 
+  SnakeProvider()
+      : _snake = [
+    SnakeNode(
+      direction: Direction.right,
+      location: [
+        const Offset(40, 30),
+        const Offset(50, 30),
+      ],
+    ),
+  ],
+        _direction = Direction.right,
+        _apple = Apple(
+          location: const Offset(40, 70),
+        ),
+        _score = 0;
+
   int get currentScore {
     return _score;
   }
@@ -35,22 +51,6 @@ class SnakeProvider with ChangeNotifier {
   set direction(Direction direction) {
     _direction = direction;
   }
-
-  SnakeProvider()
-      : _snake = [
-          SnakeNode(
-            direction: Direction.right,
-            location: [
-              const Offset(40, 30),
-              const Offset(50, 30),
-            ],
-          ),
-        ],
-        _direction = Direction.right,
-        _apple = Apple(
-          location: const Offset(40, 70),
-        ),
-        _score = 0;
 
   forward() {
     SnakeNode head = _snake!.last;
