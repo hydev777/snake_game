@@ -18,7 +18,7 @@ class _GameState extends State<Game> {
 
   @override
   void initState() {
-    Timer.periodic(const Duration(milliseconds: 200), (timer) {
+    Timer.periodic(const Duration(milliseconds: 100), (timer) {
       Provider.of<Snake>(context, listen: false).forward();
     });
     super.initState();
@@ -37,7 +37,6 @@ class _GameState extends State<Game> {
           child: ClipRect(
             child: CustomPaint(
               painter: Field(snake: snakeBody, apple: apple),
-              size: const Size.square(500),
               child: Container(
                 height: 500,
                 width: 500,
@@ -46,7 +45,7 @@ class _GameState extends State<Game> {
                 ),
                 padding: const EdgeInsets.all(10),
                 child: Align(
-                  child: Text(score.toString(), style: const TextStyle( color: Colors.blue, fontSize: 80, fontWeight: FontWeight.bold )),
+                  child: Text(score.toString(), style: const TextStyle( color: Colors.red, fontSize: 80, fontWeight: FontWeight.bold )),
                   alignment: Alignment.bottomLeft,
                 ),
               ),
