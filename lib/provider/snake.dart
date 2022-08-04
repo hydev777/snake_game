@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
-import '../provider/snake_provider.dart';
-
 const int xSizeLimit = 480;
 const int ySizeLimit = 480;
 
-class Snake with ChangeNotifier {
-  List<SnakeNode>? _body = [];
+enum Direction { left, right, up, down }
+
+class SnakeProvider with ChangeNotifier {
+  List<SnakeNode>? _snake = [];
   Direction? _direction;
   Apple? _apple;
   int _score;
@@ -25,16 +25,16 @@ class Snake with ChangeNotifier {
     return _direction;
   }
 
-  List<SnakeNode>? get body {
-    return _body;
+  List<SnakeNode>? get snake {
+    return _snake;
   }
 
   set direction(Direction direction) {
     _direction = direction;
   }
 
-  Snake()
-      : _body = [
+  SnakeProvider()
+      : _snake = [
           SnakeNode(
             direction: Direction.right,
             location: [
@@ -50,7 +50,7 @@ class Snake with ChangeNotifier {
         _score = 0;
 
   forward() {
-    SnakeNode head = _body!.last;
+    SnakeNode head = _snake!.last;
 
       switch (head.direction) {
         case Direction.left:
@@ -63,7 +63,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx + 4, head.location![1].dy + 10),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.up) {
             nextNode = SnakeNode(
@@ -73,7 +73,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx + 4, head.location![1].dy - 10),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.left) {
             nextNode = SnakeNode(
@@ -83,12 +83,12 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx - 10, head.location![1].dy),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
 
           checkApple();
 
-          _body!.removeAt(0);
+          _snake!.removeAt(0);
 
           notifyListeners();
           break;
@@ -102,7 +102,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx - 4, head.location![1].dy + 10),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.up) {
             nextNode = SnakeNode(
@@ -112,7 +112,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx - 4, head.location![1].dy - 10),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.right) {
             nextNode = SnakeNode(
@@ -122,12 +122,12 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx + 10, head.location![1].dy),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
 
           checkApple();
 
-          _body!.removeAt(0);
+          _snake!.removeAt(0);
 
           notifyListeners();
           break;
@@ -141,7 +141,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx + 10, head.location![1].dy + 4),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.left) {
             nextNode = SnakeNode(
@@ -151,7 +151,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx - 10, head.location![1].dy + 4),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.up) {
             nextNode = SnakeNode(
@@ -161,12 +161,12 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx, head.location![1].dy - 10),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
 
           checkApple();
 
-          _body!.removeAt(0);
+          _snake!.removeAt(0);
 
           notifyListeners();
           break;
@@ -180,7 +180,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx + 10, head.location![1].dy - 4),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.left) {
             nextNode = SnakeNode(
@@ -190,7 +190,7 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx - 10, head.location![1].dy - 4),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
           else if (_direction == Direction.down) {
             nextNode = SnakeNode(
@@ -200,12 +200,12 @@ class Snake with ChangeNotifier {
                 Offset(head.location![1].dx, head.location![1].dy + 10),
               ],
             );
-            _body!.add(nextNode);
+            _snake!.add(nextNode);
           }
 
           checkApple();
 
-          _body!.removeAt(0);
+          _snake!.removeAt(0);
 
           notifyListeners();
           break;
@@ -217,7 +217,7 @@ class Snake with ChangeNotifier {
   }
 
   checkApple() {
-    Offset snakeHeadTop = _body!.last.location![1];
+    Offset snakeHeadTop = _snake!.last.location![1];
 
     print({snakeHeadTop, _apple!.location});
 
@@ -246,7 +246,7 @@ class Snake with ChangeNotifier {
   }
 
   eat() {
-    SnakeNode head = _body!.last;
+    SnakeNode head = _snake!.last;
     _score += 1;
 
     switch (head.direction) {
@@ -260,7 +260,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx, head.location![1].dy + 20),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.up) {
           nextNode = SnakeNode(
@@ -270,7 +270,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx, head.location![1].dy - 20),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.left) {
           nextNode = SnakeNode(
@@ -280,7 +280,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx - 20, head.location![1].dy),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
 
         notifyListeners();
@@ -295,7 +295,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx, head.location![1].dy + 20),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.up) {
           nextNode = SnakeNode(
@@ -305,7 +305,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx, head.location![1].dy - 20),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.right) {
           nextNode = SnakeNode(
@@ -315,7 +315,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx + 20, head.location![1].dy),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
 
         notifyListeners();
@@ -330,7 +330,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx + 20, head.location![1].dy),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.left) {
           nextNode = SnakeNode(
@@ -340,7 +340,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx - 20, head.location![1].dy),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.up) {
           nextNode = SnakeNode(
@@ -350,7 +350,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx, head.location![1].dy - 20),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
 
         notifyListeners();
@@ -365,7 +365,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx + 20, head.location![1].dy),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.left) {
           nextNode = SnakeNode(
@@ -375,7 +375,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx - 20, head.location![1].dy),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
         else if (_direction == Direction.down) {
           nextNode = SnakeNode(
@@ -385,7 +385,7 @@ class Snake with ChangeNotifier {
               Offset(head.location![1].dx, head.location![1].dy + 20),
             ],
           );
-          _body!.add(nextNode);
+          _snake!.add(nextNode);
         }
 
         notifyListeners();

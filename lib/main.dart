@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:snake_game/views/game.dart';
 
-import 'classes/snake.dart';
+import 'provider/snake.dart';
 
 void main() {
   runApp(const App());
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Snake(),
+          create: (ctx) => SnakeProvider(),
         ),
       ],
       child: MaterialApp(
