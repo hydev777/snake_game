@@ -29,16 +29,27 @@ class _GameState extends State<Game> {
     final snake = Provider.of<Snake>(context);
     final snakeBody = Provider.of<Snake>(context).body;
     final apple = Provider.of<Snake>(context).apple;
+    int score = Provider.of<Snake>(context).currentScore;
 
     return SafeArea(
       child: Scaffold(
-        body: CustomPaint(
-          painter: Field(snake: snakeBody, apple: apple),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Align(
-              child: Text(_secondArrowPadValue),
-              alignment: Alignment.bottomLeft,
+        body: Center(
+          child: ClipRect(
+            child: CustomPaint(
+              painter: Field(snake: snakeBody, apple: apple),
+              size: const Size.square(500),
+              child: Container(
+                height: 500,
+                width: 500,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 4, color: Colors.black)
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Align(
+                  child: Text(score.toString(), style: const TextStyle( color: Colors.blue, fontSize: 80, fontWeight: FontWeight.bold )),
+                  alignment: Alignment.bottomLeft,
+                ),
+              ),
             ),
           ),
         ),
