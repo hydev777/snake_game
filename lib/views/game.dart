@@ -18,7 +18,7 @@ class _GameState extends State<Game> {
 
   @override
   void initState() {
-    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    Timer.periodic(const Duration(milliseconds: 200), (timer) {
       Provider.of<Snake>(context, listen: false).forward();
     });
     super.initState();
