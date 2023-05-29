@@ -18,14 +18,14 @@ class SnakeProvider with ChangeNotifier {
 
   SnakeProvider()
       : _snake = [
-    SnakeNode(
-      direction: Direction.right,
-      location: [
-        const Offset(40, 30),
-        const Offset(50, 30),
-      ],
-    ),
-  ],
+          SnakeNode(
+            direction: Direction.right,
+            location: [
+              const Offset(40, 30),
+              const Offset(50, 30),
+            ],
+          ),
+        ],
         _direction = Direction.right,
         _apple = Apple(
           location: const Offset(40, 70),
@@ -212,8 +212,6 @@ class SnakeProvider with ChangeNotifier {
   checkApple() {
     Offset snakeHeadTop = _snake!.last.location![1];
 
-    print({snakeHeadTop, _apple!.location});
-
     double xRange1 = _apple!.location!.dx;
     double xRange2 = _apple!.location!.dx + 7;
 
@@ -226,10 +224,14 @@ class SnakeProvider with ChangeNotifier {
     double yRange3 = _apple!.location!.dy;
     double yRange4 = _apple!.location!.dy + 7;
 
-    if (((snakeHeadTop.dx <= xRange2 && snakeHeadTop.dx >= xRange1) && (snakeHeadTop.dy <= yRange1 && snakeHeadTop.dy >= yRange2)) ||
-        ((snakeHeadTop.dx <= xRange2 && snakeHeadTop.dx >= xRange1) && (snakeHeadTop.dy >= yRange3 && snakeHeadTop.dy <= yRange4)) ||
-        ((snakeHeadTop.dx <= xRange3 && snakeHeadTop.dx >= xRange4) && (snakeHeadTop.dy <= yRange1 && snakeHeadTop.dy >= yRange2)) ||
-        ((snakeHeadTop.dx <= xRange3 && snakeHeadTop.dx >= xRange4) && (snakeHeadTop.dy >= yRange3 && snakeHeadTop.dy <= yRange4))) {
+    if (((snakeHeadTop.dx <= xRange2 && snakeHeadTop.dx >= xRange1) &&
+            (snakeHeadTop.dy <= yRange1 && snakeHeadTop.dy >= yRange2)) ||
+        ((snakeHeadTop.dx <= xRange2 && snakeHeadTop.dx >= xRange1) &&
+            (snakeHeadTop.dy >= yRange3 && snakeHeadTop.dy <= yRange4)) ||
+        ((snakeHeadTop.dx <= xRange3 && snakeHeadTop.dx >= xRange4) &&
+            (snakeHeadTop.dy <= yRange1 && snakeHeadTop.dy >= yRange2)) ||
+        ((snakeHeadTop.dx <= xRange3 && snakeHeadTop.dx >= xRange4) &&
+            (snakeHeadTop.dy >= yRange3 && snakeHeadTop.dy <= yRange4))) {
       eat();
       randomLocation();
       notifyListeners();

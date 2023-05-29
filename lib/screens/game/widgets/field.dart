@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../classes/apple.dart';
-import '../classes/snake_node.dart';
-import '../provider/snake.dart';
+import '../screens/game/classes/apple.dart';
+import '../screens/game/classes/snake_node.dart';
 
 class Field extends CustomPainter {
   List<SnakeNode>? snake;
