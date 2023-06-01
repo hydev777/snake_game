@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:arrow_pad/arrow_pad.dart';
 
-import '../../../widgets/field.dart';
+import '../widgets/field.dart';
 import '../classes/apple.dart';
 import '../classes/snake_node.dart';
 import '../provider/snake.dart';
@@ -20,8 +20,7 @@ class _GameState extends State<Game> {
   @override
   void initState() {
     Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      context.read<SnakeProvider>().forward();
-      // Provider.of<SnakeProvider>(context, listen: false).forward();
+      context.read<SnakeProvider>().moveForward();
     });
     super.initState();
   }

@@ -11,6 +11,7 @@ const int ySizeLimit = 480;
 enum Direction { left, right, up, down }
 
 class SnakeProvider with ChangeNotifier {
+  // ignore: prefer_final_fields
   List<SnakeNode>? _snake = [];
   Direction? _direction;
   Apple? _apple;
@@ -52,7 +53,7 @@ class SnakeProvider with ChangeNotifier {
     _direction = direction;
   }
 
-  forward() {
+  moveForward() {
     SnakeNode head = _snake!.last;
 
     switch (head.direction) {
@@ -232,13 +233,13 @@ class SnakeProvider with ChangeNotifier {
             (snakeHeadTop.dy <= yRange1 && snakeHeadTop.dy >= yRange2)) ||
         ((snakeHeadTop.dx <= xRange3 && snakeHeadTop.dx >= xRange4) &&
             (snakeHeadTop.dy >= yRange3 && snakeHeadTop.dy <= yRange4))) {
-      eat();
-      randomLocation();
+      eatApple();
+      randomAppleLocation();
       notifyListeners();
     }
   }
 
-  eat() {
+  void eatApple() {
     SnakeNode head = _snake!.last;
     _score += 1;
 
@@ -380,7 +381,7 @@ class SnakeProvider with ChangeNotifier {
     }
   }
 
-  randomLocation() {
+  void randomAppleLocation() {
     Random random = Random();
     int x = random.nextInt(xSizeLimit);
     int y = random.nextInt(ySizeLimit);
